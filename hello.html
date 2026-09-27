@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WELCOME TO 21: HER ERA 💙</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cinzel:wght@400..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              950: '#050811',
+              900: '#090d16',
+              850: '#0c1322',
+              800: '#0f172a',
+              700: '#1e293b',
+              600: '#334155'
+            },
+            silver: {
+              100: '#f8fafc',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8'
+            },
+            electric: '#38bdf8'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', '"Cinzel"', 'serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+            handwritten: ['"Caveat"', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    /* Film Grain Texture */
+    .film-grain {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(248, 250, 252, 0.12);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* VIP Pass Metallic Silver Effect */
+    .vip-card-glow {
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 50%, rgba(56,189,248,0.15) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Polaroid Style Frame */
+    .polaroid {
+      background: #f8fafc;
+      color: #0f172a;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 1px rgba(0,0,0,0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .polaroid:hover {
+      transform: translateY(-6px) rotate(1deg) scale(1.02);
+      box-shadow: 0 20px 35px rgba(56, 189, 248, 0.25);
+    }
+
+    /* Pencil Sketch Outline Filter Effect */
+    .sketch-outline {
+      filter: grayscale(100%) contrast(300%) brightness(120%) drop-shadow(0 0 2px rgba(255,255,255,0.8));
+    }
+
+    /* Candle Flame Animation */
+    @keyframes flameFlicker {
+      0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
+      25% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+      50% { transform: scale(0.9) rotate(-2deg); opacity: 0.85; }
+      75% { transform: scale(1.05) rotate(1deg); opacity: 0.98; }
+    }
+    .candle-flame {
+      animation: flameFlicker 0.6s infinite ease-in-out;
+      transform-origin: bottom center;
+    }
+
+    .color-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,0.18);
+      transition: transform .15s ease, box-shadow .15s ease;
+      cursor: pointer;
+    }
+    .color-dot:hover { transform: scale(1.15); box-shadow: 0 0 14px rgba(255,255,255,.22); }
+    .tool-btn {
+      padding: .45rem .65rem;
+      border-radius: .65rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #e2e8f0;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+    .tool-btn:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
+    .active-tool { background: rgba(56,189,248,.18) !important; border-color: rgba(56,189,248,.55) !important; color: #fff !important; }
+
+    /* Camera Flash Visual Pulse */
+    .flash-overlay {
+      pointer-events: none;
+      transition: opacity 0.4s ease-out;
+    }
+
+    /* Floating Envelope Tilt */
+    .envelope-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .envelope-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(56, 189, 248, 0.3);
+    }
+
+    /* Equalizer Sound Bar Animation */
+    @keyframes eqBar {
+      0%, 100% { height: 15%; }
+      50% { height: 95%; }
+    }
+    .eq-bar-1 { animation: eqBar 0.8s infinite ease-in-out; }
+    .eq-bar-2 { animation: eqBar 0.5s infinite ease-in-out 0.2s; }
+    .eq-bar-3 { animation: eqBar 1.1s infinite ease-in-out 0.1s; }
+    .eq-bar-4 { animation: eqBar 0.7s infinite ease-in-out 0.3s; }
+
+    /* Custom Cursor for Drawing Section */
+    .pencil-cursor {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www\.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M22 3l7 7-17 17-9 2 2-9L22 3z' fill='%23f4c27a' stroke='%23222222' stroke-width='1.5'/><path d='M20 5l7 7' stroke='%23e8a94a' stroke-width='2'/><path d='M3 29l2-7 5 5z' fill='%23222222'/></svg>") 2 30, crosshair !important;
+    }
+    .marker-cursor {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www\.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><rect x='8' y='3' width='11' height='25' rx='3' fill='%2338bdf8' stroke='%23222222' stroke-width='1.5' transform='rotate(28 13.5 15.5)'/><path d='M6 25l5 4' stroke='%23222222' stroke-width='2'/></svg>") 3 29, crosshair !important;
+    }
+    .highlighter-cursor {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www\.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M8 5h13a3 3 0 0 1 3 3v12L15 29H8a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z' fill='%23facc15' fill-opacity='.8' stroke='%23222222' stroke-width='1.5' transform='rotate(25 17 17)'/><path d='M7 27l7 4' stroke='%23222222' stroke-width='2'/></svg>") 2 32, crosshair !important;
+    }
+    .eraser-cursor {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www\.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M7 21l12-12a3 3 0 0 1 4 0l3 3a3 3 0 0 1 0 4L14 28H8l-3-3a3 3 0 0 1 0-4z' fill='%23f9a8d4' stroke='%23222222' stroke-width='1.5'/><path d='M17 12l7 7' stroke='%23222222' stroke-width='1.5'/></svg>") 2 30, crosshair !important;
+    }
+  
+    /* Her People - two video memories */
+    .people-video-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .people-video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 35px rgba(56, 189, 248, 0.18);
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+    .people-video-thumb {
+      aspect-ratio: 16 / 10;
+    }
+    .people-video-play {
+      width: 58px;
+      height: 58px;
+      transition: transform 0.25s ease;
+    }
+    .people-video-card:hover .people-video-play {
+      transform: scale(1.12);
+    }
+
+</style>
+</head>
+
+<body class="bg-navy-950 text-silver-100 font-sans antialiased selection:bg-electric selection:text-navy-950 overflow-x-hidden min-h-screen relative">
+
+  <!-- Ambient Twinkling Stars Background Canvas -->
+  <canvas id="star-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Fireworks Overlay Canvas -->
+  <canvas id="fireworks-canvas" class="fixed inset-0 pointer-events-none z-40 hidden"></canvas>
+
+  <!-- Camera Flash Overlay Effect -->
+  <div id="camera-flash" class="fixed inset-0 bg-white z-50 opacity-0 flash-overlay"></div>
+
+  <!-- Global Top Bar Navigation -->
+  <header class="fixed top-0 inset-x-0 z-40 px-4 py-3 flex items-center justify-between glass-card border-b border-white/10 backdrop-blur-md">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="goToSection('hub')">
+      <span class="text-electric text-xl"><i class="fa-solid fa-moon"></i></span>
+      <span class="font-serif font-bold text-sm sm:text-base tracking-widest text-silver-100">WELCOME TO 21</span>
+    </div>
+
+    <!-- Center Progress Indicator -->
+    <div class="hidden md:flex items-center space-x-2 text-xs text-silver-300 font-mono">
+      <span id="current-section-number" class="text-electric font-bold">01</span>
+      <span>/</span>
+      <span>13</span>
+      <span id="current-section-title" class="ml-2 text-silver-400 capitalize">• The Arrival</span>
+    </div>
+
+    <!-- Control Buttons -->
+    <div class="flex items-center space-x-2">
+      <button onclick="goToSection('hub')" title="City Map Hub" class="p-2 rounded-lg bg-navy-800/80 hover:bg-navy-700 text-silver-200 border border-white/10 transition text-sm flex items-center space-x-1">
+        <i class="fa-solid fa-map-location-dot text-electric"></i>
+        <span class="hidden sm:inline text-xs">Hub</span>
+      </button>
+      <button onclick="toggleCustomizeDrawer()" title="Customize Content" class="p-2 rounded-lg bg-navy-800/80 hover:bg-navy-700 text-silver-200 border border-white/10 transition text-sm flex items-center space-x-1">
+        <i class="fa-solid fa-gear text-silver-300 hover:rotate-90 transition-transform duration-300"></i>
+        <span class="hidden sm:inline text-xs">Edit Era</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Multi-Section Journey Container -->
+  <main id="main-container" class="relative z-10 pt-16 pb-20 min-h-screen">
+
+    <!-- ================= PART 1: THE ARRIVAL ================= -->
+    <section id="section-arrival" class="journey-section min-h-[90vh] flex flex-col items-center justify-center text-center px-4 py-12 relative">
+      <div class="max-w-2xl mx-auto space-y-8 glass-card p-8 sm:p-12 rounded-3xl border border-white/10">
+        <div class="inline-flex items-center justify-center p-3 rounded-full bg-electric/10 text-electric mb-2 animate-pulse">
+          <i class="fa-solid fa-sparkles text-2xl"></i>
+        </div>
+        
+        <h1 class="font-serif text-4xl sm:text-6xl font-extrabold tracking-tight text-white drop-shadow-lg">
+          WELCOME TO 21
+        </h1>
+        
+        <p class="font-handwritten text-2xl sm:text-3xl text-electric/90 leading-relaxed">
+          "A little journey through the girl, the memories, and the chaos."
+        </p>
+
+        <p class="text-sm sm:text-base text-silver-300 max-w-md mx-auto leading-relaxed">
+          Tonight is entirely yours. You control the narrative, explore your story, and step into your main character era.
+        </p>
+
+        <div class="pt-4">
+          <button onclick="arrivalNext()" class="px-8 py-4 rounded-full bg-gradient-to-r from-electric to-blue-600 text-navy-950 font-bold text-base tracking-wide hover:shadow-[0_0_25px_rgba(56,189,248,0.5)] transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-3 mx-auto group">
+            <span>ENTER HER ERA</span>
+            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 2: HER VIP PASS ================= -->
+    <section id="section-vip" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-12">
+      <div class="max-w-md w-full space-y-8 text-center">
+        <div class="space-y-2">
+          <span class="text-xs uppercase tracking-widest text-electric font-semibold">Exclusive Invitation</span>
+          <h2 class="font-serif text-3xl font-bold text-white">YOUR VIP PASS</h2>
+        </div>
+
+        <!-- VIP Ticket Card -->
+        <div class="vip-card-glow rounded-2xl p-6 relative overflow-hidden text-left border border-white/20 backdrop-blur-xl space-y-6">
+          <div class="flex justify-between items-start border-b border-white/10 pb-4">
+            <div>
+              <p class="text-[10px] tracking-widest uppercase text-silver-400 font-mono">EVENT TICKET #2026-21</p>
+              <h3 class="font-cinzel text-xl font-bold text-white tracking-wider">HER ERA ACCESS</h3>
+            </div>
+            <div class="px-2.5 py-1 rounded bg-electric/20 border border-electric/40 text-electric text-xs font-mono font-bold">
+              VIP ACCESS
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 font-mono text-xs">
+            <div>
+              <p class="text-silver-400">NAME</p>
+              <p id="vip-her-name" class="text-white font-bold text-sm truncate">HER NAME</p>
+            </div>
+            <div>
+              <p class="text-silver-400">AGE</p>
+              <p class="text-electric font-bold text-sm">21</p>
+            </div>
+            <div>
+              <p class="text-silver-400">STATUS</p>
+              <p class="text-white font-semibold">MAIN CHARACTER</p>
+            </div>
+            <div>
+              <p class="text-silver-400">VIBE</p>
+              <p class="text-white font-semibold">UNMATCHED 🔥</p>
+            </div>
+          </div>
+
+          <div class="border-t border-white/10 pt-4 flex items-center justify-between text-xs">
+            <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check"></i> ACCESS GRANTED
+            </span>
+            <div class="flex space-x-1">
+              <span class="w-2 h-4 bg-white/40 rounded-sm"></span>
+              <span class="w-1 h-4 bg-white/40 rounded-sm"></span>
+              <span class="w-3 h-4 bg-white/40 rounded-sm"></span>
+              <span class="w-2 h-4 bg-white/40 rounded-sm"></span>
+              <span class="w-1 h-4 bg-white/40 rounded-sm"></span>
+            </div>
+          </div>
+        </div>
+
+        <p class="font-handwritten text-2xl text-silver-200">"Your night starts here."</p>
+
+        <button onclick="goToSection('hub')" class="w-full py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition tracking-wide flex items-center justify-center space-x-2 group">
+          <span>CONTINUE TO THE CITY</span>
+          <i class="fa-solid fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= PART 3: THE NAVY-BLUE WORLD (HUB MAP) ================= -->
+    <section id="section-hub" class="journey-section hidden min-h-[85vh] flex flex-col items-center justify-center px-4 py-8">
+      <div class="max-w-5xl w-full space-y-8 text-center">
+        <div class="space-y-2">
+          <p class="text-xs tracking-widest text-electric uppercase font-mono">Interactive Destination Map</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-extrabold text-white">THE NAVY-BLUE WORLD</h2>
+          <p class="text-sm text-silver-300 max-w-lg mx-auto">Click any location to explore a part of her story, or use the bottom navigation to follow the linear experience.</p>
+        </div>
+
+        <!-- Interactive Map Grid Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 pt-4 max-w-3xl mx-auto">
+          
+          <div onclick="goToSection('beginning')" class="glass-card p-6 rounded-2xl border border-white/10 hover:border-electric/50 cursor-pointer transition transform hover:-translate-y-1 group text-left relative overflow-hidden">
+            <div class="text-3xl mb-3 text-electric"><i class="fa-solid fa-baby-carriage"></i></div>
+            <h3 class="font-serif font-bold text-lg text-white group-hover:text-electric transition">🌙 THE BEGINNING</h3>
+            <p class="text-xs text-silver-400 mt-1">Childhood photos sketched into existence.</p>
+            <span class="absolute bottom-3 right-4 text-xs font-mono text-electric opacity-0 group-hover:opacity-100 transition">Explore →</span>
+          </div>
+
+          <div onclick="goToSection('artist')" class="glass-card p-6 rounded-2xl border border-white/10 hover:border-electric/50 cursor-pointer transition transform hover:-translate-y-1 group text-left relative overflow-hidden">
+            <div class="text-3xl mb-3 text-purple-400"><i class="fa-solid fa-palette"></i></div>
+            <h3 class="font-serif font-bold text-lg text-white group-hover:text-purple-300 transition">🎨 THE ARTIST</h3>
+            <p class="text-xs text-silver-400 mt-1">Interactive studio canvas & sketch portfolio.</p>
+            <span class="absolute bottom-3 right-4 text-xs font-mono text-purple-300 opacity-0 group-hover:opacity-100 transition">Draw →</span>
+          </div>
+
+          <div onclick="goToSection('soundtrack')" class="glass-card p-6 rounded-2xl border border-white/10 hover:border-electric/50 cursor-pointer transition transform hover:-translate-y-1 group text-left relative overflow-hidden">
+            <div class="text-3xl mb-3 text-pink-400"><i class="fa-solid fa-compact-disc"></i></div>
+            <h3 class="font-serif font-bold text-lg text-white group-hover:text-pink-300 transition">🎵 THE SOUNDTRACK</h3>
+            <p class="text-xs text-silver-400 mt-1">Rihanna & pop-star vibe music player.</p>
+            <span class="absolute bottom-3 right-4 text-xs font-mono text-pink-300 opacity-0 group-hover:opacity-100 transition">Listen →</span>
+          </div>
+
+          <div onclick="goToSection('people')" class="glass-card p-6 rounded-2xl border border-white/10 hover:border-electric/50 cursor-pointer transition transform hover:-translate-y-1 group text-left relative overflow-hidden">
+            <div class="text-3xl mb-3 text-emerald-400"><i class="fa-solid fa-users"></i></div>
+            <h3 class="font-serif font-bold text-lg text-white group-hover:text-emerald-300 transition">📸 HER PEOPLE</h3>
+            <p class="text-xs text-silver-400 mt-1">The friends and family who made the memories.</p>
+            <span class="absolute bottom-3 right-4 text-xs font-mono text-emerald-300 opacity-0 group-hover:opacity-100 transition">View →</span>
+          </div>
+
+        </div>
+
+        <div class="pt-4">
+          <button onclick="goToSection('rooftop')" class="px-8 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-silver-100 text-sm font-semibold transition flex items-center space-x-2 mx-auto">
+            <span>🌃 FAST FORWARD TO THE ROOFTOP & FUTURE</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 4: THE BEGINNING ================= -->
+    <section id="section-beginning" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8">
+      <div class="max-w-3xl w-full space-y-6 text-center">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-electric">CHAPTER 01</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">THE BEGINNING</h2>
+          <p class="text-sm text-silver-300">Two little snapshots. One big story.</p>
+        </div>
+
+        <div class="relative max-w-md mx-auto">
+          <div id="beginning-photo-card"
+               class="polaroid p-4 rounded-2xl text-center cursor-pointer select-none"
+               onclick="nextBeginningPhoto()"
+               title="Click the photo for the next memory">
+            <div class="aspect-square rounded-xl overflow-hidden bg-navy-900 border border-slate-200 relative">
+              <img id="beginning-photo"
+                   src=""
+                   alt="Beginning memory"
+                   class="w-full h-full object-cover transition-all duration-500">
+              <div class="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 transition">
+                <span class="px-3 py-1.5 rounded-full bg-black/45 backdrop-blur text-white text-xs opacity-80">
+                  📸 Click for next
+                </span>
+              </div>
+            </div>
+            <p id="beginning-caption" class="font-handwritten text-2xl font-bold text-navy-900 mt-3"></p>
+          </div>
+
+          <div id="beginning-counter" class="mt-4 text-xs font-mono text-silver-400">01 / 02</div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 justify-center">
+          <button onclick="nextBeginningPhoto()"
+                  class="px-7 py-3 rounded-full bg-gradient-to-r from-electric to-blue-600 text-navy-950 font-bold hover:scale-105 transition">
+            NEXT MEMORY <i class="fa-solid fa-camera ml-2"></i>
+          </button>
+          <button onclick="goToSection('hub')"
+                  class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition">
+            BACK TO HUB
+          </button>
+        </div>
+
+        <p id="beginning-finished" class="hidden font-handwritten text-3xl text-electric pt-2">
+          "And somehow... that little girl became 21." 💙
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= PART 5: THE ARTIST ================= -->
+    <section id="section-artist" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8">
+      <div class="max-w-5xl w-full space-y-6 text-center">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-purple-400">CHAPTER 02</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">THE ARTIST</h2>
+          <p class="text-sm text-silver-300">A blank page, your colors, your rules. ✨</p>
+        </div>
+
+        <div class="glass-card p-4 sm:p-6 rounded-3xl border border-purple-400/20 space-y-4 max-w-4xl mx-auto">
+          <!-- Drawing Toolbar -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-b border-white/10 pb-4">
+            <div>
+              <p class="text-[11px] uppercase tracking-widest text-silver-400 mb-2">Colors</p>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="setDrawColor('#38bdf8')" class="color-dot bg-sky-400" title="Sky Blue"></button>
+                <button onclick="setDrawColor('#f8fafc')" class="color-dot bg-white" title="White"></button>
+                <button onclick="setDrawColor('#f472b6')" class="color-dot bg-pink-400" title="Pink"></button>
+                <button onclick="setDrawColor('#c084fc')" class="color-dot bg-purple-400" title="Purple"></button>
+                <button onclick="setDrawColor('#facc15')" class="color-dot bg-yellow-400" title="Yellow"></button>
+                <button onclick="setDrawColor('#4ade80')" class="color-dot bg-green-400" title="Green"></button>
+                <button onclick="setDrawColor('#fb7185')" class="color-dot bg-rose-400" title="Rose"></button>
+                <button onclick="setDrawColor('#fb923c')" class="color-dot bg-orange-400" title="Orange"></button>
+                <button onclick="setDrawColor('#111827')" class="color-dot bg-gray-900 border border-white/30" title="Black"></button>
+                <label class="flex items-center gap-2 px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] text-silver-300">
+                  Custom <input id="custom-color" type="color" value="#38bdf8" onchange="setDrawColor(this.value)" class="w-7 h-7 p-0 border-0 bg-transparent cursor-pointer">
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-[11px] uppercase tracking-widest text-silver-400 mb-2">Tools</p>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="setBrushType('pencil')" class="tool-btn" id="tool-pencil">✏️ Pencil</button>
+                <button onclick="setBrushType('marker')" class="tool-btn active-tool" id="tool-marker">🖊️ Marker</button>
+                <button onclick="setBrushType('highlighter')" class="tool-btn" id="tool-highlighter">🖍️ Highlighter</button>
+                <button onclick="setBrushType('eraser')" class="tool-btn" id="tool-eraser">🧽 Eraser</button>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-[11px] uppercase tracking-widest text-silver-400 mb-2">Brush size</p>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="setBrushSize(3)" class="tool-btn">Thin</button>
+                <button onclick="setBrushSize(8)" class="tool-btn active-tool">Medium</button>
+                <button onclick="setBrushSize(18)" class="tool-btn">Thick</button>
+                <button onclick="setBrushSize(32)" class="tool-btn">XL</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 justify-center">
+            <button onclick="undoDrawing()" class="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs">↶ Undo</button>
+            <button onclick="redoDrawing()" class="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs">↷ Redo</button>
+            <button onclick="clearCanvas()" class="px-3 py-2 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-200 border border-red-500/30 text-xs">🗑 Clear</button>
+            <button onclick="saveDrawing()" class="px-3 py-2 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-100 border border-purple-400/30 text-xs">💾 Save Drawing</button>
+          </div>
+
+          <div class="relative bg-white rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl">
+            <canvas id="drawing-canvas" width="1000" height="560" class="w-full h-[55vh] min-h-[330px] max-h-[600px] touch-none"></canvas>
+            <div class="absolute top-3 left-3 px-3 py-1.5 rounded-full bg-black/45 backdrop-blur text-white text-[10px] pointer-events-none">
+              ✨ Draw, doodle, write, erase — make it yours
+            </div>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-2 text-[10px] text-silver-400">
+            <span class="px-3 py-1 rounded-full bg-white/5">🖱️ Mouse</span>
+            <span class="px-3 py-1 rounded-full bg-white/5">👆 Touch</span>
+            <span class="px-3 py-1 rounded-full bg-white/5">💾 Save as PNG</span>
+          </div>
+        </div>
+
+        <p class="font-handwritten text-3xl text-purple-300">"The best art is the kind only you could make." 💜</p>
+      </div>
+    </section>
+
+    <!-- ================= PART 6: THE SOUNDTRACK ================= -->
+
+    <section id="section-soundtrack" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8">
+      <div id="soundtrack-card-bg" class="max-w-2xl w-full glass-card p-6 sm:p-10 rounded-3xl border border-white/10 space-y-8 text-center transition-all duration-700">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-pink-400">CHAPTER 03</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-extrabold text-white">THE SOUNDTRACK OF HER LIFE</h2>
+          <p class="text-sm text-silver-300">Every main character needs a soundtrack.</p>
+        </div>
+
+        <!-- Equalizer Visualizer Visual -->
+        <div class="flex items-center justify-center space-x-1.5 h-16 my-4">
+          <div class="w-2 bg-pink-400 rounded-full eq-bar-1"></div>
+          <div class="w-2 bg-purple-400 rounded-full eq-bar-2"></div>
+          <div class="w-2 bg-electric rounded-full eq-bar-3"></div>
+          <div class="w-2 bg-yellow-400 rounded-full eq-bar-4"></div>
+          <div class="w-2 bg-pink-400 rounded-full eq-bar-2"></div>
+          <div class="w-2 bg-electric rounded-full eq-bar-1"></div>
+        </div>
+
+        <!-- Mood Player Buttons -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <button onclick="playMood('badgal')" class="mood-btn p-3 rounded-xl bg-purple-900/40 hover:bg-purple-800/60 border border-purple-500/30 text-purple-200 text-xs font-bold transition flex items-center justify-center space-x-2">
+            <span>💋 BAD GAL</span>
+          </button>
+          <button onclick="playMood('chill')" class="mood-btn p-3 rounded-xl bg-blue-900/40 hover:bg-blue-800/60 border border-blue-500/30 text-blue-200 text-xs font-bold transition flex items-center justify-center space-x-2">
+            <span>🌙 CHILL</span>
+          </button>
+          <button onclick="playMood('soft')" class="mood-btn p-3 rounded-xl bg-rose-900/40 hover:bg-rose-800/60 border border-rose-500/30 text-rose-200 text-xs font-bold transition flex items-center justify-center space-x-2">
+            <span>❤️ SOFT</span>
+          </button>
+          <button onclick="playMood('chaos')" class="mood-btn p-3 rounded-xl bg-yellow-900/40 hover:bg-yellow-800/60 border border-yellow-500/30 text-yellow-200 text-xs font-bold transition flex items-center justify-center space-x-2">
+            <span>🔥 CHAOS</span>
+          </button>
+        </div>
+
+        <!-- Player Audio Banner -->
+        <div class="p-4 rounded-xl bg-navy-950/80 border border-white/10 flex items-center justify-between text-left">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center text-white">
+              <i class="fa-solid fa-music"></i>
+            </div>
+            <div>
+              <p id="current-mood-title" class="text-xs font-bold text-white">Select a Mood</p>
+              <p id="current-mood-subtitle" class="text-[10px] text-silver-400">Synthesized audio or custom track</p>
+            </div>
+          </div>
+          <button onclick="stopMoodAudio()" class="text-xs text-silver-400 hover:text-white px-2 py-1 rounded bg-white/5">
+            <i class="fa-solid fa-stop"></i> Stop
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 7: HER PEOPLE ================= -->
+    <section id="section-people" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8">
+      <div class="max-w-3xl w-full space-y-6 text-center">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-emerald-400">CHAPTER 04</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">HER PEOPLE</h2>
+          <p class="text-sm text-silver-300">Six memories. One click. One camera flash at a time. 📸</p>
+        </div>
+
+        <div class="relative max-w-2xl mx-auto">
+          <div id="people-photo-card"
+               class="glass-card p-4 sm:p-5 rounded-3xl border border-emerald-400/20 cursor-pointer select-none"
+               onclick="nextPeoplePhoto()"
+               title="Click for the next memory">
+            <div class="aspect-video rounded-2xl overflow-hidden bg-black relative">
+              <img id="people-photo" src="" alt="People memory" class="w-full h-full object-cover transition-all duration-500">
+              <div class="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 transition">
+                <span class="px-4 py-2 rounded-full bg-black/50 backdrop-blur text-white text-xs">
+                  📸 Click for next memory
+                </span>
+              </div>
+            </div>
+            <div class="pt-4">
+              <h3 id="people-title" class="font-serif font-bold text-xl text-white"></h3>
+              <p id="people-text" class="font-handwritten text-2xl text-emerald-300 mt-1"></p>
+            </div>
+          </div>
+          <div id="people-counter" class="mt-4 text-xs font-mono text-silver-400">01 / 06</div>
+        </div>
+
+        <!-- Two extra video memories -->
+        <div class="w-full max-w-2xl mx-auto pt-2">
+          <div class="mb-4">
+            <p class="text-xs font-mono text-electric uppercase tracking-widest">MORE MEMORIES 🎥</p>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white mt-1">Two videos, two stories.</h3>
+            <p class="text-xs text-silver-400 mt-1">Tap either one to watch it bigger.</p>
+          </div>
+          <div id="people-video-grid" class="grid grid-cols-2 gap-3 sm:gap-5"></div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 justify-center">
+          <button onclick="nextPeoplePhoto()"
+                  class="px-7 py-3 rounded-full bg-gradient-to-r from-emerald-400 to-electric text-navy-950 font-bold hover:scale-105 transition">
+            NEXT MEMORY <i class="fa-solid fa-camera ml-2"></i>
+          </button>
+          <button onclick="goToSection('hub')"
+                  class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold transition">
+            BACK TO HUB
+          </button>
+        </div>
+
+        <p id="people-finished" class="hidden font-handwritten text-3xl text-electric pt-2">
+          "Six snapshots. A lifetime of people." 💙
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= PART 8: SECRET ENVELOPES ================= -->
+
+    <section id="section-envelopes" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8">
+      <div class="max-w-3xl w-full space-y-8 text-center">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-cyan-400">CHAPTER 06</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">SECRET ENVELOPES</h2>
+          <p class="text-sm text-silver-300">Quiet down... open when ready.</p>
+        </div>
+
+        <!-- Envelopes Grid -->
+        <div id="envelopes-container" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 10: CINEMATIC TRANSITION ================= -->
+    <section id="section-transition" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8 text-center">
+      <div class="max-w-2xl mx-auto space-y-8 font-serif">
+        <p id="cinematic-line-1" class="text-2xl sm:text-4xl text-silver-400 opacity-0 transition-opacity duration-1000">21 years.</p>
+        <p id="cinematic-line-2" class="text-2xl sm:text-4xl text-silver-300 opacity-0 transition-opacity duration-1000">Thousands of memories.</p>
+        <p id="cinematic-line-3" class="text-2xl sm:text-4xl text-silver-200 opacity-0 transition-opacity duration-1000">Hundreds of people you've met.</p>
+        <p id="cinematic-line-4" class="text-2xl sm:text-4xl text-electric opacity-0 transition-opacity duration-1000">Countless moments still to come.</p>
+        <p id="cinematic-line-5" class="text-3xl sm:text-5xl font-extrabold text-white opacity-0 transition-opacity duration-1000">But your story is just getting started.</p>
+
+        <div id="cinematic-button-wrapper" class="pt-8 opacity-0 transition-opacity duration-1000">
+          <button onclick="goToSection('rooftop')" class="px-8 py-4 rounded-full bg-electric text-navy-950 font-extrabold text-base tracking-widest hover:scale-105 transition shadow-[0_0_25px_rgba(56,189,248,0.6)]">
+            LOOK UP ↑
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 11: THE ROOFTOP & SKY OF STARS ================= -->
+    <section id="section-rooftop" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8 relative">
+      <div class="max-w-4xl w-full space-y-6 text-center">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-electric">CHAPTER 07</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">THE ROOFTOP & SKY OF STARS</h2>
+          <p class="text-sm text-silver-300">Click the glowing sky stars below to unlock constellation memories.</p>
+        </div>
+
+        <!-- Rooftop Skyline View Canvas / Card -->
+        <div class="glass-card p-6 sm:p-10 rounded-3xl border border-white/10 relative overflow-hidden space-y-6 min-h-[350px] flex flex-col justify-between">
+          
+          <!-- Floating Interactive Stars Sky Container -->
+          <div id="rooftop-stars-container" class="relative h-64 w-full border border-white/10 rounded-2xl bg-gradient-to-b from-navy-950 to-navy-900 overflow-hidden">
+            <!-- Stars placed dynamically via JavaScript -->
+          </div>
+
+          <div class="space-y-2">
+            <p class="font-serif text-2xl text-white">"Look how far you've come."</p>
+            <p class="font-handwritten text-3xl text-electric">"And you're only 21."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 12: THE BIRTHDAY VIDEO ================= -->
+    <section id="section-video" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8">
+      <div class="max-w-3xl w-full space-y-6 text-center">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-electric">FINAL CHAPTER</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">ONE LAST THING...</h2>
+          <p class="text-sm text-silver-300">Your custom birthday film.</p>
+        </div>
+
+        <!-- Video Player Frame -->
+        <div class="glass-card p-4 sm:p-6 rounded-3xl border border-electric/30 shadow-[0_0_30px_rgba(56,189,248,0.2)]">
+          <div id="video-embed-wrapper" class="aspect-video w-full rounded-2xl overflow-hidden bg-black flex items-center justify-center relative">
+            <button onclick="startVideoPlayback()" class="px-8 py-4 rounded-full bg-electric text-navy-950 font-bold text-lg flex items-center space-x-3 hover:scale-105 transition">
+              <i class="fa-solid fa-play"></i>
+              <span>PRESS PLAY</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 13: THE CAKE & BLOW CANDLES ================= -->
+    <section id="section-cake" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8">
+      <div id="cake-room-wrapper" class="max-w-xl w-full glass-card p-8 sm:p-12 rounded-3xl border border-white/10 text-center space-y-8 transition-colors duration-1000">
+        <div class="space-y-1">
+          <p class="text-xs font-mono text-yellow-400 uppercase tracking-widest">Make A Wish</p>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">BLOW THE 21 CANDLES 🎂</h2>
+          <p id="blow-instruction" class="text-xs sm:text-sm text-silver-300">Blow into your microphone or click the button below!</p>
+        </div>
+
+        <!-- SVG 21-Candle Birthday Cake -->
+        <div class="relative w-48 h-48 sm:w-56 sm:h-56 mx-auto">
+          <!-- Cake Graphic -->
+          <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+            <!-- Cake Base -->
+            <rect x="30" y="120" width="140" height="50" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+            <rect x="45" y="80" width="110" height="40" rx="8" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
+            <!-- Frosting Drips -->
+            <path d="M 30 120 Q 40 135 50 120 Q 60 135 70 120 Q 80 135 90 120 Q 100 135 110 120 Q 120 135 130 120 Q 140 135 150 120 Q 160 135 170 120 L 170 130 L 30 130 Z" fill="#f8fafc" opacity="0.9"/>
+            
+            <!-- Candle Sticks & Flames -->
+            <!-- 21 Stylized Candles -->
+            <g id="svg-candles">
+              <!-- Candle 1 -->
+              <rect x="60" y="55" width="6" height="25" fill="#f472b6" rx="2"/>
+              <path class="candle-flame flame-1" d="M 63 43 Q 68 50 63 54 Q 58 50 63 43" fill="#facc15"/>
+              <!-- Candle 2 -->
+              <rect x="75" y="52" width="6" height="28" fill="#38bdf8" rx="2"/>
+              <path class="candle-flame flame-2" d="M 78 40 Q 83 47 78 51 Q 73 47 78 40" fill="#facc15"/>
+              <!-- Candle 3 -->
+              <rect x="90" y="50" width="6" height="30" fill="#c084fc" rx="2"/>
+              <path class="candle-flame flame-3" d="M 93 38 Q 98 45 93 49 Q 88 45 93 38" fill="#facc15"/>
+              <!-- Candle 4 -->
+              <rect x="105" y="52" width="6" height="28" fill="#4ade80" rx="2"/>
+              <path class="candle-flame flame-4" d="M 108 40 Q 113 47 108 51 Q 103 47 108 40" fill="#facc15"/>
+              <!-- Candle 5 -->
+              <rect x="120" y="55" width="6" height="25" fill="#facc15" rx="2"/>
+              <path class="candle-flame flame-5" d="M 123 43 Q 128 50 123 54 Q 118 50 123 43" fill="#facc15"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Blow Buttons & Status -->
+        <div class="space-y-3">
+          <button onclick="extinguishCandles()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-navy-950 font-extrabold text-sm tracking-wider shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:scale-105 transition">
+            💨 CLICK TO BLOW CANDLES
+          </button>
+          
+          <div>
+            <button onclick="enableMicrophoneBlow()" id="mic-btn" class="text-xs text-electric hover:underline flex items-center justify-center space-x-1.5 mx-auto">
+              <i class="fa-solid fa-microphone"></i>
+              <span>Enable Microphone Detection</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PART 14: THE FINAL SURPRISE ================= -->
+    <section id="section-final" class="journey-section hidden min-h-[90vh] flex flex-col items-center justify-center px-4 py-8 text-center">
+      <div class="max-w-2xl mx-auto space-y-8 glass-card p-8 sm:p-12 rounded-3xl border border-white/20 shadow-[0_0_50px_rgba(56,189,248,0.3)]">
+        <div class="inline-flex items-center justify-center p-4 rounded-full bg-electric/20 text-electric text-3xl mb-2 animate-bounce">
+          👑
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-6xl font-black text-white tracking-tight">
+          HAPPY 21ST BIRTHDAY
+        </h1>
+
+        <h2 id="final-her-name" class="font-cinzel text-2xl sm:text-3xl text-electric font-bold tracking-widest">
+          HER NAME
+        </h2>
+
+        <p class="font-handwritten text-2xl sm:text-3xl text-silver-200 leading-relaxed max-w-lg mx-auto">
+          "To more adventures, more drawings, more late nights, more music, more laughter, more memories, and a whole lot more chaos. 💙"
+        </p>
+
+        <p class="text-sm uppercase tracking-widest text-silver-400 font-mono">
+          WELCOME TO YOUR 21ST ERA
+        </p>
+
+        <div class="pt-4 flex flex-wrap gap-4 justify-center">
+          <button onclick="triggerFireworks()" class="px-6 py-3 rounded-full bg-electric text-navy-950 font-bold text-xs tracking-wider uppercase hover:scale-105 transition">
+            🎆 CELEBRATE AGAIN
+          </button>
+          <button onclick="goToSection('hub')" class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-silver-100 text-xs font-bold tracking-wider uppercase transition">
+            🌌 EXPLORE HUB
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Fixed Bottom Navigation Bar -->
+  <footer class="fixed bottom-0 inset-x-0 z-40 px-4 py-2.5 glass-card border-t border-white/10 flex items-center justify-between text-xs">
+    <button onclick="navigateStep(-1)" class="px-3.5 py-1.5 rounded-lg bg-navy-800 hover:bg-navy-700 text-silver-200 border border-white/10 transition flex items-center space-x-1.5">
+      <i class="fa-solid fa-chevron-left text-[10px]"></i>
+      <span>PREV</span>
+    </button>
+
+    <div class="flex items-center space-x-2">
+      <button onclick="goToSection('hub')" class="px-3 py-1.5 rounded-lg bg-electric/10 hover:bg-electric/20 text-electric font-semibold border border-electric/30 transition">
+        <i class="fa-solid fa-grip mr-1"></i> Hub
+      </button>
+    </div>
+
+    <button onclick="navigateStep(1)" class="px-3.5 py-1.5 rounded-lg bg-electric hover:bg-sky-400 text-navy-950 font-bold transition flex items-center space-x-1.5">
+      <span>NEXT</span>
+      <i class="fa-solid fa-chevron-right text-[10px]"></i>
+    </button>
+  </footer>
+
+  <!-- Generic Story Lightbox Modal -->
+  <div id="story-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="max-w-lg w-full glass-card p-6 rounded-2xl border border-white/20 space-y-4 text-left relative">
+      <button onclick="closeStoryModal()" class="absolute top-4 right-4 text-silver-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="modal-content" class="space-y-3">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Her People Video Lightbox -->
+  <div id="people-video-modal" class="fixed inset-0 z-[60] bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4"
+       onclick="closePeopleVideo(event)">
+    <div class="w-full max-w-4xl relative" onclick="event.stopPropagation()">
+      <button onclick="closePeopleVideo()" class="absolute -top-12 right-0 text-white/70 hover:text-white text-2xl z-10" aria-label="Close video">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="glass-card p-2 sm:p-3 rounded-2xl border border-white/20">
+        <div id="people-video-modal-content" class="aspect-video rounded-xl overflow-hidden bg-black"></div>
+        <div class="px-2 pt-3 pb-1">
+          <h3 id="people-video-modal-title" class="font-serif text-xl font-bold text-white"></h3>
+          <p id="people-video-modal-subtitle" class="text-sm text-silver-400 mt-1"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Creator Edit Mode Drawer -->
+  <div id="customize-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-navy-900 border-l border-white/20 p-6 shadow-2xl transition-transform duration-300 transform translate-x-full overflow-y-auto">
+    <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-gear text-electric"></i>
+        <h3 class="font-serif font-bold text-lg text-white">CUSTOMIZE HER ERA</h3>
+      </div>
+      <button onclick="toggleCustomizeDrawer()" class="text-silver-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <form onsubmit="saveCustomizations(event)" class="space-y-6 text-xs">
+      
+      <!-- General Info -->
+      <div class="space-y-3 border-b border-white/10 pb-4">
+        <h4 class="font-bold text-electric uppercase tracking-wider">1. General Settings</h4>
+        <div>
+          <label class="block text-silver-400 mb-1">Her Name:</label>
+          <input type="text" id="edit-her-name" class="w-full p-2.5 rounded bg-navy-800 border border-white/10 text-white font-semibold focus:outline-none focus:border-electric">
+        </div>
+        <div>
+          <label class="block text-silver-400 mb-1">Birthday Video URL (YouTube Embed or MP4):</label>
+          <input type="text" id="edit-video-url" placeholder="https://... or YouTube embed URL" class="w-full p-2.5 rounded bg-navy-800 border border-white/10 text-white focus:outline-none focus:border-electric">
+          <input type="file" id="edit-video-file" accept="video/*" class="w-full mt-2 p-2 rounded bg-navy-800 border border-white/10 text-silver-300">
+          <p class="text-[10px] text-silver-500 mt-1">URL works after reload. Local file works in the current browser session.</p>
+          <label class="block text-silver-400 mb-2 mt-4">Soundtrack Music (4 categories):</label>
+          <div id="edit-music-inputs" class="space-y-3"></div>
+          <p class="text-[10px] text-silver-500 mt-1">Add one MP3/WAV/OGG URL for each mood, or choose a local file. Each category can have its own song.</p>
+        </div>
+      </div>
+
+      <!-- Childhood Photos -->
+      <div class="space-y-3 border-b border-white/10 pb-4">
+        <h4 class="font-bold text-electric uppercase tracking-wider">2. Beginning Photos (3)</h4>
+        <div id="edit-childhood-inputs" class="space-y-3"></div>
+        <input type="file" id="edit-child-files" accept="image/*" multiple class="w-full p-2 rounded bg-navy-800 border border-white/10 text-silver-300">
+      </div>
+      <!-- People Photos -->
+      <div class="space-y-3 border-b border-white/10 pb-4">
+        <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Her People Photos (6)</h4>
+        <div id="edit-people-inputs" class="space-y-3"></div>
+        <input type="file" id="edit-people-files" accept="image/*" multiple class="w-full p-2 rounded bg-navy-800 border border-white/10 text-silver-300">
+      </div>
+
+      <!-- Her People Videos -->
+      <div class="space-y-3 border-b border-white/10 pb-4">
+        <h4 class="font-bold text-electric uppercase tracking-wider">4. Her People Videos (2)</h4>
+        <div id="edit-people-video-inputs" class="space-y-3"></div>
+        <p class="text-[10px] text-silver-500">
+          Add a YouTube link or a direct MP4/WebM/OGG link. Thumbnail is optional; YouTube thumbnails can be generated automatically.
+        </p>
+      </div>
+
+      <!-- Helpful note -->
+      <div class="p-3 rounded-xl bg-electric/5 border border-electric/20 text-[10px] text-silver-400 leading-relaxed">
+        <b class="text-electric">Tip:</b> For photos, paste direct image URLs. For music/video, paste a direct file URL or choose a local file above. GitHub Pages cannot permanently upload files from this form into your repository.
+      </div>
+
+      <!-- Action Buttons -->
+
+      <div class="pt-2 flex space-x-3">
+        <button type="submit" class="flex-1 py-3 rounded-xl bg-electric text-navy-950 font-bold transition hover:bg-sky-400">
+          SAVE ALL CHANGES
+        </button>
+        <button type="button" onclick="resetDefaults()" class="py-3 px-4 rounded-xl bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30 transition">
+          Reset
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+
+    // Default Config Data Structure
+    const DEFAULT_CONFIG = {
+      herName: "HER NAME",
+      videoUrl: "",
+      musicUrl: "",
+      musicTracks: { badgal: "", chill: "", soft: "", chaos: "" },
+      childhoodPhotos: [
+        { url: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=85", caption: "Look at her. She had no idea. 💙" },
+        { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85", caption: "And somehow... that little girl became 21. ✨" },
+        { url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=85", caption: "And this is where her next chapter begins. 🌙" }
+      ],
+      artSketches: [],
+      peoplePhotos: [
+        { url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80", title: "The Inner Circle", text: "Thank you for being the person who makes every late night an unforgettable adventure." },
+        { url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80", title: "Partner in Crime", text: "Remember when we promised we'd take over the world? Phase 21 starts right now." },
+        { url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80", title: "Laughter Unlimited", text: "For all the times we laughed until our stomachs hurt over absolute nonsense." },
+        { url: "https://images.unsplash.com/photo-1522543558187-768b6df7c25c?auto=format&fit=crop&w=600&q=80", title: "Adventures & Chaos", text: "21 looks ridiculously good on you. Let's make this chapter the wild one." },
+        { url: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=600&q=80", title: "Unconditional Support", text: "Always believing in your art, your dreams, and your incredible heart." },
+        { url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=600&q=80", title: "Forever Crew", text: "Here's to the memories made and the thousands still ahead of us!" }
+      ],
+      peopleVideos: [
+        { url: "", thumbnail: "", title: "VIDEO ONE", subtitle: "A little memory 🎥" },
+        { url: "", thumbnail: "", title: "VIDEO TWO", subtitle: "Another one for the memories 💙" }
+      ],
+      envelopes: [
+        { title: "💌 OPEN ME FIRST", sender: "With Love", text: "Happy 21st Birthday! Today isn't just about celebrating another year—it's about celebrating every laugh, every sketch, and every unforgettable moment that made you who you are today." },
+        { title: "💌 FROM YOUR PEOPLE", sender: "Your Besties", text: "You are the heartbeat of every room you walk into. Never stop creating, dreaming, and causing a little good chaotic fun. We love you so much!" },
+        { title: "💌 DO NOT OPEN IF EMOTIONAL", sender: "A Special Note", text: "Looking back at how far you've come... you've grown into such an inspiring, talented, and fiercely strong person. Be proud of your journey!" },
+        { title: "💌 ONE LAST THING", sender: "From Hos & Everyone", text: "21 is your golden age. Own every single second of it. This whole night, and this whole era, belongs to YOU! 💙" }
+      ]
+    };
+
+    // App State
+    let appConfig = JSON.parse(localStorage.getItem('her_era_config')) || DEFAULT_CONFIG;
+
+    const SECTIONS = [
+      'arrival', 'vip', 'hub', 'beginning', 'artist',
+      'soundtrack', 'people', 'envelopes',
+      'transition', 'rooftop', 'video', 'cake', 'final'
+    ];
+    let currentSectionIndex = 0;
+
+    let audioCtx = null;
+    let currentSynthNode = null;
+    let currentMoodAudio = null;
+    let currentMoodAudioUrl = null;
+    let moodPlaybackToken = 0;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Camera Shutter SFX Synthesis
+    function playCameraShutterSound() {
+      try {
+        const ctx = getAudioContext();
+        const bufferSize = ctx.sampleRate * 0.1;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 1000;
+
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        noise.start();
+      } catch (e) {
+        console.log('Audio init error', e);
+      }
+    }
+
+    // Synthesized Mood Audio Jams
+    function playSynthJam(freqs, speed = 0.3) {
+      stopMoodAudio();
+      try {
+        const ctx = getAudioContext();
+        let step = 0;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        gain.gain.setValueAtTime(0.05, ctx.currentTime);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+
+        const interval = setInterval(() => {
+          if (!currentSynthNode) {
+            clearInterval(interval);
+            return;
+          }
+          osc.frequency.setValueAtTime(freqs[step % freqs.length], ctx.currentTime);
+          step++;
+        }, speed * 1000);
+
+        currentSynthNode = { osc, interval };
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    function stopMoodAudio() {
+      // Stop a synthesized track.
+      if (currentSynthNode) {
+        try {
+          if (currentSynthNode.interval) clearInterval(currentSynthNode.interval);
+          if (currentSynthNode.osc) currentSynthNode.osc.stop();
+        } catch(e){}
+        currentSynthNode = null;
+      }
+
+      // Stop a real uploaded/URL audio track.
+      moodPlaybackToken++;
+      if (currentMoodAudio) {
+        try {
+          currentMoodAudio.pause();
+          currentMoodAudio.currentTime = 0;
+          currentMoodAudio.removeAttribute('src');
+          currentMoodAudio.load();
+        } catch(e){}
+        currentMoodAudio = null;
+      }
+      if (currentMoodAudioUrl) {
+        try { URL.revokeObjectURL(currentMoodAudioUrl); } catch(e){}
+        currentMoodAudioUrl = null;
+      }
+
+      document.getElementById('current-mood-title').innerText = "Select a Mood";
+      document.getElementById('current-mood-subtitle').innerText = "Choose your soundtrack";
+    }
+
+    // Local MP3/WAV/OGG storage (IndexedDB avoids localStorage size limits).
+    const MUSIC_DB_NAME = 'her_era_music_db';
+    const MUSIC_STORE = 'tracks';
+    function openMusicDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(MUSIC_DB_NAME, 1);
+        req.onupgradeneeded = () => req.result.createObjectStore(MUSIC_STORE);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+    async function saveMusicBlob(mood, file) {
+      if (!file) return;
+      try {
+        const db = await openMusicDB();
+        await new Promise((resolve, reject) => {
+          const tx = db.transaction(MUSIC_STORE, 'readwrite');
+          tx.objectStore(MUSIC_STORE).put(file, mood);
+          tx.oncomplete = resolve; tx.onerror = () => reject(tx.error);
+        });
+      } catch (e) { console.warn('Could not store local music:', e); }
+    }
+    async function getMusicBlob(mood) {
+      try {
+        const db = await openMusicDB();
+        return await new Promise((resolve, reject) => {
+          const tx = db.transaction(MUSIC_STORE, 'readonly');
+          const req = tx.objectStore(MUSIC_STORE).get(mood);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => reject(req.error);
+        });
+      } catch (e) { return null; }
+    }
+
+    function playMood(mood) {
+      const card = document.getElementById('soundtrack-card-bg');
+      const title = document.getElementById('current-mood-title');
+      const sub = document.getElementById('current-mood-subtitle');
+      const tracks = appConfig.musicTracks || {};
+      const customUrl = tracks[mood] || '';
+
+      const moodData = {
+        badgal: { title: "💋 BAD GAL ERA", sub: "Your Bad Gal soundtrack", color: "rgba(192, 132, 252, 0.6)", freqs: [110,130,164,110,220], speed: 0.25 },
+        chill:  { title: "🌙 MIDNIGHT CHILL", sub: "Your Chill soundtrack", color: "rgba(56, 189, 248, 0.6)", freqs: [146,164,196,220], speed: 0.6 },
+        soft:   { title: "❤️ SOFT ERA", sub: "Your Soft soundtrack", color: "rgba(251, 113, 133, 0.6)", freqs: [261,329,392,523], speed: 0.5 },
+        chaos:  { title: "🔥 CHAOS ERA", sub: "Your Chaos soundtrack", color: "rgba(251, 191, 36, 0.6)", freqs: [150,300,150,450,200], speed: 0.15 }
+      };
+
+      const data = moodData[mood];
+      if (!data) return;
+      stopMoodAudio();
+      title.innerText = data.title;
+      sub.innerText = data.sub;
+      card.style.borderColor = data.color;
+
+      const audio = document.getElementById('custom-audio-player');
+      const token = moodPlaybackToken;
+
+      if (customUrl) {
+        currentMoodAudio = audio;
+        audio.src = customUrl;
+        audio.currentTime = 0;
+        audio.play().catch(err => console.warn('Audio playback blocked:', err));
+      } else {
+        getMusicBlob(mood).then(file => {
+          if (token !== moodPlaybackToken) return;
+          if (file) {
+            if (currentMoodAudioUrl) { try { URL.revokeObjectURL(currentMoodAudioUrl); } catch(e){} }
+            currentMoodAudioUrl = URL.createObjectURL(file);
+            currentMoodAudio = audio;
+            audio.src = currentMoodAudioUrl;
+            audio.currentTime = 0;
+            audio.play().catch(err => console.warn('Audio playback blocked:', err));
+          } else {
+            playSynthJam(data.freqs, data.speed);
+          }
+        });
+      }
+    }
+
+    function updateSectionUI() {
+      SECTIONS.forEach(id => {
+        const sec = document.getElementById(`section-${id}`);
+        if (sec) sec.classList.add('hidden');
+      });
+
+      const currentId = SECTIONS[currentSectionIndex];
+      const targetSec = document.getElementById(`section-${currentId}`);
+      if (targetSec) {
+        targetSec.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Update Nav Indicators
+      document.getElementById('current-section-number').innerText = String(currentSectionIndex + 1).padStart(2, '0');
+      document.getElementById('current-section-title').innerText = `• ${currentId}`;
+
+      // Trigger Cinematic Typing Effect if Section 10
+      if (currentId === 'transition') {
+        runCinematicSequence();
+      }
+    }
+
+    function goToSection(id) {
+      const idx = SECTIONS.indexOf(id);
+      if (idx !== -1) {
+        currentSectionIndex = idx;
+        updateSectionUI();
+      }
+    }
+
+    function navigateStep(direction) {
+      currentSectionIndex = (currentSectionIndex + direction + SECTIONS.length) % SECTIONS.length;
+      updateSectionUI();
+    }
+
+    function arrivalNext() {
+      playCameraShutterSound();
+      triggerFlashEffect();
+      setTimeout(() => {
+        goToSection('vip');
+      }, 300);
+    }
+
+    function triggerFlashEffect() {
+      const flash = document.getElementById('camera-flash');
+      flash.style.opacity = '1';
+      setTimeout(() => {
+        flash.style.opacity = '0';
+      }, 300);
+    }
+
+    function renderAppContent() {
+      // Set Name Text Elements
+      document.querySelectorAll('#vip-her-name, #final-her-name').forEach(el => {
+        el.innerText = appConfig.herName;
+      });
+      // 1. Render the Beginning sequence
+      initBeginningSequence();
+
+      // 2. The Artist now uses only the interactive drawing studio
+      // 3. Party section removed.
+      // 4. Render the six-photo people sequence
+      initPeopleSequence();
+      renderPeopleVideos();
+
+      // 5. Render Envelopes
+
+      const envelopeContainer = document.getElementById('envelopes-container');
+      envelopeContainer.innerHTML = appConfig.envelopes.map((env, idx) => `
+        <div onclick="openEnvelopeModal('${env.title.replace(/'/g, "\\'")}', '${env.sender.replace(/'/g, "\\'")}', '${env.text.replace(/'/g, "\\'")}')" class="envelope-card glass-card p-6 rounded-2xl border border-white/10 hover:border-cyan-400/50 cursor-pointer text-left flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-300 text-xl flex-shrink-0">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div>
+            <h4 class="font-serif font-bold text-white text-base">${env.title}</h4>
+            <p class="text-xs text-silver-400">From: ${env.sender}</p>
+          </div>
+        </div>
+      `).join('');
+
+      // Populate Rooftop Stars Sky
+      initRooftopStars();
+    }
+    let isDrawing = false;
+    let drawColor = '#38bdf8';
+    let brushSize = 8;
+    let brushType = 'marker';
+    let drawingCanvas = null;
+    let drawingCtx = null;
+    let drawingHistory = [];
+    let drawingRedo = [];
+
+    function initDrawingCanvas() {
+      drawingCanvas = document.getElementById('drawing-canvas');
+      if (!drawingCanvas) return;
+
+      drawingCtx = drawingCanvas.getContext('2d', { willReadFrequently: true });
+      drawingCtx.lineCap = 'round';
+      drawingCtx.lineJoin = 'round';
+
+      const resizeCanvas = () => {
+        const rect = drawingCanvas.getBoundingClientRect();
+        const old = drawingCanvas.toDataURL();
+        const ratio = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        drawingCanvas.width = Math.max(600, Math.floor(rect.width * ratio));
+        drawingCanvas.height = Math.max(330, Math.floor(rect.height * ratio));
+        drawingCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        drawingCtx.fillStyle = '#ffffff';
+        drawingCtx.fillRect(0, 0, rect.width, rect.height);
+        const img = new Image();
+        img.onload = () => drawingCtx.drawImage(img, 0, 0, rect.width, rect.height);
+        img.src = old;
+        drawingCtx.lineCap = 'round';
+        drawingCtx.lineJoin = 'round';
+        saveDrawingState();
+      };
+
+      // The canvas is already sized by CSS; set a sensible backing size once.
+      const rect = drawingCanvas.getBoundingClientRect();
+      const ratio = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      drawingCanvas.width = Math.floor(Math.max(700, rect.width) * ratio);
+      drawingCanvas.height = Math.floor(Math.max(420, rect.height) * ratio);
+      drawingCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      drawingCtx.fillStyle = '#ffffff';
+      drawingCtx.fillRect(0, 0, rect.width, rect.height);
+
+      drawingCanvas.addEventListener('pointerdown', startDraw);
+      drawingCanvas.addEventListener('pointermove', draw);
+      drawingCanvas.addEventListener('pointerup', endDraw);
+      drawingCanvas.addEventListener('pointercancel', endDraw);
+      drawingCanvas.addEventListener('pointerleave', endDraw);
+      drawingCanvas.classList.add('marker-cursor');
+      window.addEventListener('resize', () => {
+        // Do not resize while drawing; the canvas remains usable on normal responsive layouts.
+      });
+
+      saveDrawingState();
+    }
+
+    function canvasPoint(e) {
+      const rect = drawingCanvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function configureBrush() {
+      drawingCtx.globalCompositeOperation = brushType === 'eraser' ? 'destination-out' : 'source-over';
+      drawingCtx.strokeStyle = brushType === 'highlighter' ? hexToRgba(drawColor, 0.22) : drawColor;
+      drawingCtx.lineWidth =
+        brushType === 'pencil' ? Math.max(1, brushSize * 0.55) :
+        brushType === 'highlighter' ? Math.max(8, brushSize * 2.4) :
+        brushSize;
+    }
+
+    function startDraw(e) {
+      if (!drawingCanvas) return;
+      e.preventDefault();
+      isDrawing = true;
+      drawingCanvas.setPointerCapture?.(e.pointerId);
+      const p = canvasPoint(e);
+      drawingCtx.beginPath();
+      drawingCtx.moveTo(p.x, p.y);
+      configureBrush();
+      drawingCtx.lineTo(p.x + 0.01, p.y + 0.01);
+      drawingCtx.stroke();
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      e.preventDefault();
+      const p = canvasPoint(e);
+      configureBrush();
+      drawingCtx.lineTo(p.x, p.y);
+      drawingCtx.stroke();
+    }
+
+    function endDraw() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      drawingCtx.closePath();
+      drawingCtx.globalCompositeOperation = 'source-over';
+      saveDrawingState();
+    }
+
+    function hexToRgba(hex, alpha) {
+      const clean = hex.replace('#', '');
+      const n = parseInt(clean, 16);
+      const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function setDrawColor(color) {
+      drawColor = color;
+      const picker = document.getElementById('custom-color');
+      if (picker) picker.value = color;
+      if (brushType === 'eraser') setBrushType('marker');
+    }
+
+    function setBrushSize(size) {
+      brushSize = size;
+      document.querySelectorAll('.tool-btn').forEach(btn => {
+        if (['Thin','Medium','Thick','XL'].includes(btn.innerText.trim())) btn.classList.remove('active-tool');
+      });
+    }
+
+    function setBrushType(type) {
+      brushType = type;
+      document.querySelectorAll('[id^="tool-"]').forEach(btn => btn.classList.remove('active-tool'));
+      const selected = document.getElementById(`tool-${type}`);
+      if (selected) selected.classList.add('active-tool');
+
+      // Change the mouse pointer on the drawing canvas to match the selected tool.
+      if (drawingCanvas) {
+        drawingCanvas.classList.remove('pencil-cursor', 'marker-cursor', 'highlighter-cursor', 'eraser-cursor');
+        drawingCanvas.classList.add(`${type}-cursor`);
+      }
+    }
+
+    function saveDrawingState() {
+      if (!drawingCanvas) return;
+      drawingHistory.push(drawingCanvas.toDataURL('image/png'));
+      if (drawingHistory.length > 30) drawingHistory.shift();
+      drawingRedo = [];
+    }
+
+    function restoreCanvas(dataUrl) {
+      const img = new Image();
+      img.onload = () => {
+        const rect = drawingCanvas.getBoundingClientRect();
+        drawingCtx.globalCompositeOperation = 'source-over';
+        drawingCtx.fillStyle = '#ffffff';
+        drawingCtx.fillRect(0, 0, rect.width, rect.height);
+        drawingCtx.drawImage(img, 0, 0, rect.width, rect.height);
+      };
+      img.src = dataUrl;
+    }
+
+    function undoDrawing() {
+      if (drawingHistory.length <= 1) return;
+      const current = drawingHistory.pop();
+      drawingRedo.push(current);
+      restoreCanvas(drawingHistory[drawingHistory.length - 1]);
+    }
+
+    function redoDrawing() {
+      if (!drawingRedo.length) return;
+      const next = drawingRedo.pop();
+      drawingHistory.push(next);
+      restoreCanvas(next);
+    }
+
+    function clearCanvas() {
+      if (!drawingCanvas) return;
+      const rect = drawingCanvas.getBoundingClientRect();
+      drawingCtx.globalCompositeOperation = 'source-over';
+      drawingCtx.fillStyle = '#ffffff';
+      drawingCtx.fillRect(0, 0, rect.width, rect.height);
+      saveDrawingState();
+    }
+
+    function saveDrawing() {
+      if (!drawingCanvas) return;
+      const link = document.createElement('a');
+      link.download = 'her-era-drawing.png';
+      link.href = drawingCanvas.toDataURL('image/png');
+      link.click();
+      confetti({ particleCount: 35, spread: 50, origin: { y: 0.65 } });
+    }
+
+    function finishDrawing() {
+      saveDrawing();
+    }
+
+    let beginningIndex = 0;
+    let peopleIndex = 0;
+
+    function showCameraFlash() {
+      playCameraShutterSound();
+      triggerFlashEffect();
+    }
+
+    function initBeginningSequence() {
+      beginningIndex = 0;
+      const photo = appConfig.childhoodPhotos?.[0];
+      if (photo) updateBeginningUI(photo);
+    }
+
+    function updateBeginningUI(item) {
+      const img = document.getElementById('beginning-photo');
+      const cap = document.getElementById('beginning-caption');
+      const counter = document.getElementById('beginning-counter');
+      const finished = document.getElementById('beginning-finished');
+      if (!img || !item) return;
+      img.src = item.url;
+      cap.textContent = item.caption || '';
+      counter.textContent = `${beginningIndex + 1} / ${appConfig.childhoodPhotos.length}`;
+      finished?.classList.toggle('hidden', beginningIndex !== appConfig.childhoodPhotos.length - 1);
+    }
+
+    function nextBeginningPhoto() {
+      const photos = appConfig.childhoodPhotos || [];
+      if (!photos.length) return;
+      if (beginningIndex >= photos.length - 1) {
+        beginningIndex = 0;
+      } else {
+        beginningIndex++;
+      }
+      showCameraFlash();
+      setTimeout(() => updateBeginningUI(photos[beginningIndex]), 180);
+    }
+
+    function initPeopleSequence() {
+      peopleIndex = 0;
+      const photo = appConfig.peoplePhotos?.[0];
+      if (photo) updatePeopleUI(photo);
+    }
+
+    function updatePeopleUI(item) {
+      const img = document.getElementById('people-photo');
+      const title = document.getElementById('people-title');
+      const text = document.getElementById('people-text');
+      const counter = document.getElementById('people-counter');
+      const finished = document.getElementById('people-finished');
+      if (!img || !item) return;
+      img.src = item.url;
+      title.textContent = item.title || '';
+      text.textContent = item.text || '';
+      counter.textContent = `${peopleIndex + 1} / ${appConfig.peoplePhotos.length}`;
+      finished?.classList.toggle('hidden', peopleIndex !== appConfig.peoplePhotos.length - 1);
+    }
+
+    function getYouTubeVideoId(url) {
+      if (!url) return "";
+      const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([^&?/\s]+)/i);
+      return match ? match[1] : "";
+    }
+
+    function getVideoPoster(video) {
+      if (video?.thumbnail) return video.thumbnail;
+      const id = getYouTubeVideoId(video?.url || "");
+      return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
+    }
+
+    function renderPeopleVideos() {
+      const grid = document.getElementById('people-video-grid');
+      if (!grid) return;
+
+      const videos = (appConfig.peopleVideos || []).slice(0, 2);
+      while (videos.length < 2) {
+        videos.push({ url: "", thumbnail: "", title: `VIDEO ${videos.length + 1}`, subtitle: "Add your video in Edit Era 🎥" });
+      }
+
+      grid.innerHTML = videos.map((video, idx) => {
+        const poster = getVideoPoster(video);
+        const background = poster
+          ? `<img src="${escapeHtml(poster)}" alt="${escapeHtml(video.title || `Video ${idx + 1}`)}" class="w-full h-full object-cover">`
+          : `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-navy-800 to-navy-950">
+               <i class="fa-solid fa-video text-3xl text-electric mb-2"></i>
+               <span class="text-[10px] text-silver-400">ADD VIDEO IN EDIT ERA</span>
+             </div>`;
+
+        return `
+          <button type="button" onclick="openPeopleVideo(${idx})"
+                  class="people-video-card glass-card rounded-2xl border border-white/10 overflow-hidden text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-electric/60">
+            <div class="people-video-thumb relative overflow-hidden bg-black">
+              ${background}
+              <div class="absolute inset-0 flex items-center justify-center bg-black/20">
+                <span class="people-video-play rounded-full bg-white/90 text-navy-950 flex items-center justify-center shadow-xl">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </span>
+              </div>
+            </div>
+            <div class="p-3">
+              <h4 class="font-serif font-bold text-white text-sm">${escapeHtml(video.title || `VIDEO ${idx + 1}`)}</h4>
+              <p class="text-[10px] text-silver-400 mt-1">${escapeHtml(video.subtitle || "Tap to watch")}</p>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+   function nextPeoplePhoto() {
+      const photos = appConfig.peoplePhotos || [];
+      if (!photos.length) return;
+      if (peopleIndex >= photos.length - 1) {
+        peopleIndex = 0;
+      } else {
+        peopleIndex++;
+      }
+      showCameraFlash();
+      setTimeout(() => updatePeopleUI(photos[peopleIndex]), 180);
+    }
+
+    function openPeopleVideo(index) {
+      const video = appConfig.peopleVideos?.[index];
+      if (!video?.url) {
+        openStoryModal("Add a video 🎥", "Open Edit Era → Her People Videos and add the link for this video.", "");
+        return;
+      }
+
+      const modal = document.getElementById('people-video-modal');
+      const content = document.getElementById('people-video-modal-content');
+      const title = document.getElementById('people-video-modal-title');
+      const subtitle = document.getElementById('people-video-modal-subtitle');
+      const url = video.url.trim();
+      const youtubeId = getYouTubeVideoId(url);
+
+      title.textContent = video.title || `Video ${index + 1}`;
+      subtitle.textContent = video.subtitle || "";
+
+      if (youtubeId) {
+        content.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${youtubeId}?autoplay=1"
+          title="${escapeHtml(video.title || "Her People Video")}" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>`;
+      } else if (url.startsWith('data:video/') || /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)) {
+        content.innerHTML = `<video class="w-full h-full object-contain bg-black" src="${escapeHtml(url)}" controls autoplay playsinline></video>`;
+      } else {
+        content.innerHTML = `<iframe class="w-full h-full" src="${escapeHtml(url)}"
+          title="${escapeHtml(video.title || "Her People Video")}" frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      }
+
+      modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closePeopleVideo(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const modal = document.getElementById('people-video-modal');
+      const content = document.getElementById('people-video-modal-content');
+      modal.classList.add('hidden');
+      content.innerHTML = "";
+      document.body.classList.remove('overflow-hidden');
+    }
+
+   function openStoryModal(title, text, imgUrl) {
+      const modal = document.getElementById('story-modal');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `
+        ${imgUrl ? `<img src="${imgUrl}" class="w-full h-48 object-cover rounded-xl border border-white/10 mb-2">` : ''}
+        <h3 class="font-serif font-bold text-xl text-white">${title}</h3>
+        <p class="font-handwritten text-2xl text-electric leading-relaxed">${text}</p>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    function openEnvelopeModal(title, sender, text) {
+      openStoryModal(`${title} (${sender})`, text, "");
+    }
+
+    function closeStoryModal() {
+      document.getElementById('story-modal').classList.add('hidden');
+    }
+
+    function runCinematicSequence() {
+      const lines = [1, 2, 3, 4, 5];
+      lines.forEach((num, idx) => {
+        setTimeout(() => {
+          const el = document.getElementById(`cinematic-line-${num}`);
+          if (el) el.style.opacity = '1';
+        }, idx * 1200);
+      });
+
+      setTimeout(() => {
+        const btn = document.getElementById('cinematic-button-wrapper');
+        if (btn) btn.style.opacity = '1';
+      }, lines.length * 1200 + 400);
+    }
+
+    function initRooftopStars() {
+      const sky = document.getElementById('rooftop-stars-container');
+      if (!sky) return;
+      sky.innerHTML = '';
+
+      const starCount = 12;
+      const allPhotos = [...appConfig.childhoodPhotos, ...appConfig.peoplePhotos];
+
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        const photo = allPhotos[i % allPhotos.length];
+        const top = Math.random() * 80 + 10;
+        const left = Math.random() * 80 + 10;
+
+        star.className = 'absolute w-4 h-4 rounded-full bg-electric text-white flex items-center justify-center text-[8px] cursor-pointer shadow-[0_0_12px_#38bdf8] hover:scale-150 transition animate-pulse';
+        star.style.top = `${top}%`;
+        star.style.left = `${left}%`;
+        star.innerHTML = '<i class="fa-solid fa-star"></i>';
+
+        star.onclick = () => {
+          confetti({ particleCount: 20, origin: { x: left/100, y: top/100 } });
+          openStoryModal("Memory Star 🌌", photo.caption || photo.title || photo.text, photo.url);
+        };
+
+        sky.appendChild(star);
+      }
+    }
+
+    function startVideoPlayback() {
+      const wrapper = document.getElementById('video-embed-wrapper');
+      const url = appConfig.videoUrl || "";
+      if (!url) {
+        wrapper.innerHTML = `<div class="text-center p-8"><p class="text-white font-semibold">No birthday video added yet.</p><p class="text-silver-400 text-sm mt-2">Open Edit Era and add a YouTube embed URL or MP4.</p></div>`;
+        return;
+      }
+
+      if (url.startsWith('data:video/') || /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)) {
+        wrapper.innerHTML = `<video class="w-full h-full object-contain rounded-2xl bg-black" src="${url}" controls autoplay playsinline></video>`;
+      } else {
+        wrapper.innerHTML = `<iframe class="w-full h-full rounded-2xl" src="${url}" title="Birthday Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      }
+    }
+
+    function playCustomMusic() {
+      const url = appConfig.musicUrl || "";
+      if (!url) {
+        openStoryModal("Add your soundtrack 🎵", "Open Edit Era → Music and paste a direct MP3/WAV/OGG URL or choose a local audio file.", "");
+        return;
+      }
+      const audio = document.getElementById('custom-audio-player');
+      audio.src = url;
+      audio.play().catch(() => {});
+      document.getElementById('current-mood-title').innerText = "🎵 YOUR CUSTOM TRACK";
+      document.getElementById('current-mood-subtitle').innerText = "Your uploaded / linked birthday soundtrack";
+    }
+
+    function extinguishCandles() {
+      const flames = document.querySelectorAll('.candle-flame');
+      flames.forEach(f => f.style.display = 'none');
+
+      document.getElementById('cake-room-wrapper').style.backgroundColor = 'rgba(5, 8, 17, 0.95)';
+      document.getElementById('blow-instruction').innerText = "✨ ALL CANDLES BLOWN OUT! GO TO THE FINAL SURPRISE ✨";
+
+      confetti({ particleCount: 100, spread: 100, origin: { y: 0.5 } });
+
+      setTimeout(() => {
+        goToSection('final');
+        triggerFireworks();
+      }, 2000);
+    }
+
+    async function enableMicrophoneBlow() {
+      const btn = document.getElementById('mic-btn');
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        btn.innerText = "🎤 Microphone active! Blow now!";
+        
+        const audioContext = new AudioContext();
+        const analyzer = audioContext.createAnalyser();
+        const microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyzer);
+
+        analyzer.fftSize = 256;
+        const dataArray = new Uint8Array(analyzer.frequencyBinCount);
+
+        function checkVolume() {
+          analyzer.getByteFrequencyData(dataArray);
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) {
+            sum += dataArray[i];
+          }
+          let average = sum / dataArray.length;
+          if (average > 65) { // Blow threshold
+            extinguishCandles();
+            stream.getTracks().forEach(t => t.stop());
+            return;
+          }
+          requestAnimationFrame(checkVolume);
+        }
+        checkVolume();
+      } catch (err) {
+        btn.innerText = "Microphone access denied. Click button to blow!";
+      }
+    }
+
+    function triggerFireworks() {
+      const duration = 5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      }, 250);
+    }
+
+    function toggleCustomizeDrawer() {
+      const drawer = document.getElementById('customize-drawer');
+      drawer.classList.toggle('translate-x-full');
+      if (!drawer.classList.contains('translate-x-full')) {
+        populateDrawerInputs();
+      }
+    }
+
+    function populateDrawerInputs() {
+      document.getElementById('edit-her-name').value = appConfig.herName || "";
+      document.getElementById('edit-video-url').value = appConfig.videoUrl || "";
+      const musicContainer = document.getElementById('edit-music-inputs');
+      const tracks = appConfig.musicTracks || { badgal: "", chill: "", soft: "", chaos: "" };
+      const musicLabels = { badgal: "💋 Bad Gal", chill: "🌙 Chill", soft: "❤️ Soft", chaos: "🔥 Chaos" };
+      musicContainer.innerHTML = Object.keys(musicLabels).map(mood => `
+        <div class="p-2 bg-navy-800 rounded space-y-2">
+          <p class="font-bold text-silver-300">${musicLabels[mood]}</p>
+          <input type="text" id="edit-music-url-${mood}" value="${escapeHtml(tracks[mood] || '')}" placeholder="Direct MP3 / WAV / OGG URL" class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+          <input type="file" id="edit-music-file-${mood}" accept="audio/*" class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-silver-300">
+        </div>
+      `).join('');
+
+      const childContainer = document.getElementById('edit-childhood-inputs');
+      childContainer.innerHTML = (appConfig.childhoodPhotos || []).map((p, idx) => `
+        <div class="p-2 bg-navy-800 rounded space-y-1">
+          <p class="font-bold text-silver-300">Beginning Photo ${idx + 1}</p>
+          <input type="text" id="edit-child-url-${idx}" value="${escapeHtml(p.url || '')}" placeholder="Direct image URL" class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+          <input type="text" id="edit-child-cap-${idx}" value="${escapeHtml(p.caption || '')}" placeholder="Caption" class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+        </div>
+      `).join('');
+
+      const peopleContainer = document.getElementById('edit-people-inputs');
+      peopleContainer.innerHTML = (appConfig.peoplePhotos || []).map((p, idx) => `
+        <div class="p-2 bg-navy-800 rounded space-y-1">
+          <p class="font-bold text-silver-300">People Photo ${idx + 1}</p>
+          <input type="text" id="edit-people-url-${idx}" value="${escapeHtml(p.url || '')}" placeholder="Direct image URL" class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+          <input type="text" id="edit-people-title-${idx}" value="${escapeHtml(p.title || '')}" placeholder="Title" class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+          <input type="text" id="edit-people-text-${idx}" value="${escapeHtml(p.text || '')}" placeholder="Message" class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+        </div>
+      `).join('');
+
+      const peopleVideoContainer = document.getElementById('edit-people-video-inputs');
+      if (peopleVideoContainer) {
+        const videos = (appConfig.peopleVideos || []).slice(0, 2);
+        while (videos.length < 2) {
+          videos.push({ url: "", thumbnail: "", title: `VIDEO ${videos.length + 1}`, subtitle: "" });
+        }
+
+        peopleVideoContainer.innerHTML = videos.map((v, idx) => `
+          <div class="p-2 bg-navy-800 rounded space-y-2">
+            <p class="font-bold text-silver-300">People Video ${idx + 1}</p>
+            <input type="text" id="edit-people-video-url-${idx}" value="${escapeHtml(v.url || '')}"
+                   placeholder="YouTube link or direct MP4/WebM/OGG URL"
+                   class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+            <input type="text" id="edit-people-video-thumb-${idx}" value="${escapeHtml(v.thumbnail || '')}"
+                   placeholder="Optional thumbnail image URL"
+                   class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+            <input type="text" id="edit-people-video-title-${idx}" value="${escapeHtml(v.title || '')}"
+                   placeholder="Video title"
+                   class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+            <input type="text" id="edit-people-video-subtitle-${idx}" value="${escapeHtml(v.subtitle || '')}"
+                   placeholder="Short description"
+                   class="w-full p-1.5 rounded bg-navy-950 border border-white/10 text-white">
+          </div>
+        `).join('');
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function fileToDataURL(file) {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => resolve("");
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function readLocalFileAsDataURL(input) {
+      return new Promise(resolve => {
+        const file = input?.files?.[0];
+        if (!file) return resolve("");
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => resolve("");
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function saveCustomizations(e) {
+      e.preventDefault();
+      appConfig.herName = document.getElementById('edit-her-name').value || "HER NAME";
+      appConfig.videoUrl = document.getElementById('edit-video-url').value.trim();
+      appConfig.musicTracks = appConfig.musicTracks || { badgal: "", chill: "", soft: "", chaos: "" };
+      const musicMoods = ['badgal', 'chill', 'soft', 'chaos'];
+      for (const mood of musicMoods) {
+        const input = document.getElementById(`edit-music-url-${mood}`);
+        if (input) appConfig.musicTracks[mood] = input.value.trim();
+      }
+      appConfig.musicUrl = appConfig.musicTracks.badgal || "";
+
+      // Optional local photo uploads replace the matching photos in this browser.
+      const childFiles = Array.from(document.getElementById('edit-child-files')?.files || []).slice(0, 3);
+      const peopleFiles = Array.from(document.getElementById('edit-people-files')?.files || []).slice(0, 6);
+      for (let i = 0; i < childFiles.length; i++) {
+        const dataUrl = await fileToDataURL(childFiles[i]);
+        if (dataUrl && appConfig.childhoodPhotos[i]) appConfig.childhoodPhotos[i].url = dataUrl;
+      }
+      for (let i = 0; i < peopleFiles.length; i++) {
+        const dataUrl = await fileToDataURL(peopleFiles[i]);
+        if (dataUrl && appConfig.peoplePhotos[i]) appConfig.peoplePhotos[i].url = dataUrl;
+      }
+
+      localStorage.setItem('her_era_config', JSON.stringify(appConfig));
+      renderAppContent();
+      toggleCustomizeDrawer();
+    }
+
+    function resetDefaults() {
+      if (confirm("Reset all settings and photos back to default?")) {
+        localStorage.removeItem('her_era_config');
+        appConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+        renderAppContent();
+        toggleCustomizeDrawer();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderAppContent();
+      initDrawingCanvas();
+      updateSectionUI();
+    });
+  </script>
+  <audio id="custom-audio-player" class="hidden"></audio>
+</body>
+</html>
